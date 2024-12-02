@@ -1,4 +1,6 @@
+import CallUs from "../../components/CallUs/CallUs";
 import CategorySwiper from "../../components/CategorySwiper/CategorySwiper";
+import ChefRecommends from "../../components/ChefRecommends/ChefRecommends";
 import FromOurMenu from "../../components/FromOurMenu/FromOurMenu";
 import HomeBanner from "../../components/HomeBanner/HomeBanner";
 import HomeBistroBossSection from "../../components/HomeBistroBossSection/HomeBistroBossSection";
@@ -13,6 +15,8 @@ const Home = () => {
             <CategorySwiper/>
             <HomeBistroBossSection/>
             <PopularMenu/>
+            <CallUs/>
+            <ChefRecommends/>
             <FromOurMenu/>
             <Testimonials/>
         </div>
