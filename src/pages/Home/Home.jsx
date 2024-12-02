@@ -6,11 +6,15 @@ import HomeBanner from "../../components/HomeBanner/HomeBanner";
 import HomeBistroBossSection from "../../components/HomeBistroBossSection/HomeBistroBossSection";
 import PopularMenu from "../../components/PopularMenu/PopularMenu";
 import Testimonials from "../../components/Testimonials/Testimonials";
+import { Helmet } from 'react-helmet-async';
 
 
 const Home = () => {
     return (
         <div>
+            <Helmet>
+                <title>Bistro | Home</title>
+            </Helmet>
             <HomeBanner/>
             <CategorySwiper/>
             <HomeBistroBossSection/>

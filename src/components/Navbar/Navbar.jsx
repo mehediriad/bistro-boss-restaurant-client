@@ -5,10 +5,10 @@ import logo from "../../assets/logo.png"
 const Navbar = () => {
     const links = <>
         <li><NavLink to={`/`}>Home</NavLink></li>
-        <li><NavLink to={`/about`}>About</NavLink></li>
-        <li><NavLink to={`/services`}>Service</NavLink></li>
-        <li><NavLink to={`/blogs`}>Blog</NavLink></li>
         <li><NavLink to={`/contact`}>Contact</NavLink></li>
+        <li><NavLink to={`/menu`}>Menu</NavLink></li>
+        <li><NavLink to={`/shop`}>Shop</NavLink></li>
+        <li><NavLink to={`/dashboard`}>Dashboard</NavLink></li>
 
 
     </>
