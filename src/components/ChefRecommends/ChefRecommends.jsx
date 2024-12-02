@@ -36,7 +36,7 @@ const ChefRecommends = () => {
                                         src={menu.img}
                                         alt="Img" />
                                 </figure>
-                                <div className="flex flex-col justify-center items-center gap-3">
+                                <div className="flex flex-col justify-center items-center gap-3 px-6 text-center">
                                     <h2 className="card-title">{menu.name}</h2>
                                     <p>{menu.details}</p>
                                     <div className="card-actions justify-end">
