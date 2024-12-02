@@ -39,7 +39,7 @@ const Navbar = () => {
                             </ul>
                         </div>
                         <Link className="btn btn-ghost text-xl">
-                            <span>
+                            <span className="font-cinzel">
                             <h2 className="tracking-widest">BISTRO BOSS</h2>
                             <h3 className="tracking-widest text-sm">Restaurant</h3>
                             </span> 
