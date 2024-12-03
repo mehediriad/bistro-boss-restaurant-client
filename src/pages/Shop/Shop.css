@@ -1,0 +1,13 @@
+.react-tabs__tab{
+    border:none;
+    text-transform: uppercase;
+    
+} 
+.react-tabs__tab-list{
+    border:none;
+}
+.react-tabs__tab--selected{
+    font-weight: bold;
+    color:#BB8506;
+    border-bottom: 2px solid #BB8506;
+}

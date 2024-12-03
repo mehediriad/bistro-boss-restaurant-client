@@ -5,6 +5,7 @@ import dessertBg from "../../assets/menu/dessert-bg.jpeg"
 import pizzaBg from "../../assets/menu/pizza-bg.jpg"
 import saladBg from "../../assets/menu/salad-bg.jpg"
 import soupBg from "../../assets/menu/soup-bg.jpg"
+import drinksBg from "../../assets/menu/banner3.jpg"
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import useMenuData from "../../hooks/useMenuData";
 import MenuCategory from "../../components/MenuCategory/MenuCategory";
@@ -17,6 +18,7 @@ const Menu = () => {
     const pizzaItems = menu.filter(item => item.category === 'pizza')
     const saladItems = menu.filter(item => item.category === 'salad')
     const soupItems = menu.filter(item => item.category === 'soup')
+    const drinksItems = menu.filter(item => item.category === 'drinks')
     return (
         <div>
             <Helmet>
@@ -41,7 +43,7 @@ const Menu = () => {
                 subTitle={`Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
                 titleClass={`text-4xl`}
             ></Cover>
-            <MenuCategory items={dessertItems}></MenuCategory>
+            <MenuCategory items={dessertItems} index={3}></MenuCategory>
 
             <Cover
                 coverImg={pizzaBg}
@@ -49,7 +51,7 @@ const Menu = () => {
                 subTitle={`Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
                 titleClass={`text-4xl`}
             ></Cover>
-            <MenuCategory items={pizzaItems}></MenuCategory>
+            <MenuCategory items={pizzaItems} index={1}></MenuCategory>
 
 
             <Cover
@@ -58,7 +60,7 @@ const Menu = () => {
                 subTitle={`Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
                 titleClass={`text-4xl`}
             ></Cover>
-            <MenuCategory items={saladItems}></MenuCategory>
+            <MenuCategory items={saladItems} index={0}></MenuCategory>
 
             <Cover
                 coverImg={soupBg}
@@ -66,7 +68,15 @@ const Menu = () => {
                 subTitle={`Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
                 titleClass={`text-4xl`}
             ></Cover>
-            <MenuCategory items={soupItems}></MenuCategory>
+            <MenuCategory items={soupItems} index={2}></MenuCategory>
+
+            <Cover
+                coverImg={drinksBg}
+                title={`Drinks`}
+                subTitle={`Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.`}
+                titleClass={`text-4xl`}
+            ></Cover>
+            <MenuCategory items={drinksItems} index={4}></MenuCategory>
         </div>
     );
 };

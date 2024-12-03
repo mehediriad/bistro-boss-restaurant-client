@@ -2,7 +2,7 @@ import { Parallax } from 'react-parallax';
 
 
 const Cover = ({ coverImg,title,subTitle,titleClass, subTitleClass }) => {
-    console.log(coverImg);
+    
     
     return (
         <div className='mb-20'>

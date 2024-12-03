@@ -1,8 +1,9 @@
 
+import { Link } from "react-router-dom";
 import MenuItem from "../MenuItem/MenuItem";
 
 
-const MenuCategory = ({ items }) => {
+const MenuCategory = ({ items,index }) => {
 
     return (
         <div className="max-w-7xl mx-auto mb-20">
@@ -12,7 +13,10 @@ const MenuCategory = ({ items }) => {
                 }
             </div>
             <div className="flex flex-col justify-center items-center">
+                <Link to={index ?`/shop?index=${index}` : '/shop'}>
                 <button className="btn btn-outline mt-10 border-0 border-b-4 text-[#1F2937]">Order Your Favourite Food</button>
+                </Link>
+                
             </div>
         </div>
     );
