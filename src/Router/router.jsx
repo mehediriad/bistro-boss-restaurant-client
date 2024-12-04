@@ -9,6 +9,7 @@ import Shop from "../pages/Shop/Shop";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import PrivateRoute from "./PrivateRoute";
 
   const router = createBrowserRouter([
     {
@@ -33,7 +34,7 @@ import Register from "../pages/Register/Register";
         },
         {
           path: "/dashboard",
-          element: <Dashboard/>,
+          element: <PrivateRoute><Dashboard/></PrivateRoute>,
         },
       ]
     },

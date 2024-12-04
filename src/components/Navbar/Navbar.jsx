@@ -1,17 +1,35 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png"
+import useAuth from "../../hooks/useAuth";
 
 
 const Navbar = () => {
+    const { user, logOut } = useAuth()
     const links = <>
         <li><NavLink to={`/`}>Home</NavLink></li>
         <li><NavLink to={`/contact`}>Contact</NavLink></li>
         <li><NavLink to={`/menu`}>Menu</NavLink></li>
         <li><NavLink to={`/shop`}>Shop</NavLink></li>
-        <li><NavLink to={`/dashboard`}>Dashboard</NavLink></li>
+        {user && <li><NavLink to={`/dashboard`}>Dashboard</NavLink></li>}
 
 
     </>
+
+    const handleLogOut = e => {
+        e.preventDefault()
+        logOut()
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "You are now Logged Out!!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }).catch((error) => {
+                // An error happened.
+            });
+    }
     return (
         <div className="fixed z-10 text-white w-full">
             <div>
@@ -40,9 +58,9 @@ const Navbar = () => {
                         </div>
                         <Link className="btn btn-ghost text-xl">
                             <span className="font-cinzel">
-                            <h2 className="tracking-widest">BISTRO BOSS</h2>
-                            <h3 className="tracking-widest text-sm">Restaurant</h3>
-                            </span> 
+                                <h2 className="tracking-widest">BISTRO BOSS</h2>
+                                <h3 className="tracking-widest text-sm">Restaurant</h3>
+                            </span>
                         </Link>
                     </div>
                     <div className="navbar-center hidden lg:flex">
@@ -51,7 +69,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        <div className="flex-none">
+                        {user ?<div className="flex-none">
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                                     <div className="indicator">
@@ -82,7 +100,7 @@ const Navbar = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>:""}
 
                         <button className="btn btn-ghost btn-circle">
                             <svg
@@ -99,9 +117,9 @@ const Navbar = () => {
                             </svg>
                         </button>
 
-                        {/* <button className="btn btn-outline btn-warning">Appointment</button> */}
+                        {user? "" : <Link to="/login"><button className="btn btn-outline btn-warning">Login</button></Link>}
 
-                        <div className="dropdown dropdown-end">
+                        {user ? <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                     <img
@@ -111,17 +129,17 @@ const Navbar = () => {
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="bg-white menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                className="bg-base-300 menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow">
                                 <li>
                                     <a className="justify-between">
                                         Profile
-                                        <span className="badge">Mehedi</span>
+                                        <span className="badge">{user?.displayName}</span>
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><button>Logout</button></li>
+                                <li><button onClick={handleLogOut}>Logout</button></li>
                             </ul>
-                        </div>
+                        </div> : ""}
 
                     </div>
                 </div>

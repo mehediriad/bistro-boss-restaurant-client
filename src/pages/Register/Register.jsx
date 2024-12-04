@@ -6,9 +6,12 @@ import authImg from "../../assets/others/authentication2.png"
 import bgImg from "../../assets/others/authentication.png"
 import { useEffect, useRef, useState } from "react";
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const Register = () => {
+    const {createUser,updateUserProfile} = useAuth()
     const [show, setShow] = useState(false);
     const [error, setError] = useState("")
     const [passwordError, setPasswordError] = useState(false)
@@ -69,7 +72,42 @@ const Register = () => {
             return setError("Confirm Trems & Conditions")
         }
 
+        createUser(email,password)
+        .then((userCredential) => {
+           
+            const user = userCredential.user;
 
+            if(user){
+                updateUserProfile(name)
+                .then(() => {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Your Account has been Created!",
+                        icon: "success",
+                        footer: 'Click here to <a href="/login">Login</a>'
+                      });
+                      console.log(user);
+                      
+                  }).catch((error) => {
+                    // An error occurred
+                    // ...
+                  });
+               
+            }
+        
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if(error){
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: errorMessage
+                  });
+            }
+          });
 
     }
 

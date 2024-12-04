@@ -3,18 +3,24 @@ import authImg from "../../assets/others/authentication2.png"
 import bgImg from "../../assets/others/authentication.png"
 import { FaEye, FaEyeSlash, FaFacebook, FaLinkedinIn } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
+    const {signInUser} = useAuth()
     const [show, setShow] = useState(false);
     const [btnDisabled,setBtnDisabled] = useState(true)
     const reCapchaRef = useRef()
+    const navigate = useNavigate()
+    const location = useLocation()
     useEffect(()=>{
         loadCaptchaEnginge(6);
     },[])
 
-
+    console.log(location);
+    
     const handleReCapcha = (e) =>{
         e.preventDefault()
         const reCapcha = reCapchaRef.current.value;
@@ -34,6 +40,27 @@ const Login = () => {
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email,password);
+
+        signInUser(email,password)
+        .then((userCredential) => {
+            
+            const user = userCredential.user;
+            if(user){
+                
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "You are now Logged In!!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate(location?.state ? location.state : "/")
+            }
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+          });
         
     }
     return (
