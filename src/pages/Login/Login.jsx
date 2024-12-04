@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import loginImg from "../../assets/others/authentication2.png"
+import authImg from "../../assets/others/authentication2.png"
 import bgImg from "../../assets/others/authentication.png"
 import { FaEye, FaEyeSlash, FaFacebook, FaLinkedinIn } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
@@ -28,19 +28,27 @@ const Login = () => {
         }
         
     }
+
+    const handleLogin = ( e)=>{
+        e.preventDefault()
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email,password);
+        
+    }
     return (
         <div className="p-0" style={{ backgroundImage: `url(${bgImg})` }}>
 
             <div className="hero min-h-screen shadow-2xl">
                 <div className="hero-content flex-col lg:flex-row">
                     <div className="text-center lg:text-left">
-                        <img src={loginImg} alt="Login" />
+                        <img src={authImg} alt="Login" />
 
                     </div>
                     <div className="card w-full max-w-sm shrink-0 shadow-2xl p-4 bg-white">
                         <div className="card-body ">
                             <h1 className="text-2xl font-bold">Login</h1>
-                            <form>
+                            <form onSubmit={handleLogin}>
 
                                 <div className="form-control ">
                                     <label className="label">
