@@ -1,14 +1,35 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import loginImg from "../../assets/others/authentication2.png"
 import bgImg from "../../assets/others/authentication.png"
-import { FaEye,FaEyeSlash, FaFacebook, FaLinkedinIn  } from "react-icons/fa6";
+import { FaEye, FaEyeSlash, FaFacebook, FaLinkedinIn } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 
 const Login = () => {
     const [show, setShow] = useState(false);
+    const [btnDisabled,setBtnDisabled] = useState(true)
+    const reCapchaRef = useRef()
+    useEffect(()=>{
+        loadCaptchaEnginge(6);
+    },[])
+
+
+    const handleReCapcha = (e) =>{
+        e.preventDefault()
+        const reCapcha = reCapchaRef.current.value;
+        console.log(reCapcha);
+        if (validateCaptcha(reCapcha)==true) {
+            setBtnDisabled(false)
+        }
+   
+        else {
+            setBtnDisabled(true)
+        }
+        
+    }
     return (
-        <div className="p-0" style={{backgroundImage: `url(${bgImg})`}}>
+        <div className="p-0" style={{ backgroundImage: `url(${bgImg})` }}>
 
             <div className="hero min-h-screen shadow-2xl">
                 <div className="hero-content flex-col lg:flex-row">
@@ -39,8 +60,18 @@ const Login = () => {
                                         <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                     </label>
                                 </div>
+                                <div className="form-control ">
+                                    <label className="label">
+                                        <LoadCanvasTemplate />
+                                    </label>
+                                    <div className="form-control relative">
+                                        <input ref={reCapchaRef} name="reCapcha" type="text" placeholder="type here" className="input input-bordered bg-transparent" required />
+                                        <button className="absolute top-4 right-3 text-[#A2A2A2]" onClick={handleReCapcha}>Verify</button>
+                                    </div>
+
+                                </div>
                                 <div className="form-control mt-6">
-                                    <button type="submit" className="btn bg-[#D1A054] text-white">Sign In</button>
+                                    <button disabled={btnDisabled} type="submit" className="btn bg-[#D1A054] text-white">Sign In</button>
                                 </div>
                             </form>
 
@@ -57,7 +88,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            
+
         </div>
     );
 };
