@@ -7,6 +7,7 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 const Login = () => {
     const {signInUser} = useAuth()
@@ -112,11 +113,7 @@ const Login = () => {
 
                             <div className="text-center mt-3 space-y-3">
                                 <small>Or Sign In With</small>
-                                <div className="space-x-4">
-                                    <button className="text-[#3B5998] bg-[#F5F5F8] p-3 rounded-full hover:bg-slate-200"><FaFacebook /></button>
-                                    <button className="text-[#3C79E6] bg-[#F5F5F8] p-3 rounded-full hover:bg-slate-200"><FaLinkedinIn /></button>
-                                    <button className="bg-[#F5F5F8] p-3 rounded-full hover:bg-slate-200"><FcGoogle /></button>
-                                </div>
+                                <SocialLogin/>
                                 <small>New Here?<Link to={`/register`} className="btn btn-link text-[#D1A054]">Sign Up</Link></small>
                             </div>
                         </div>

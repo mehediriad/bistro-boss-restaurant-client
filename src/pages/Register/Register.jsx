@@ -8,6 +8,8 @@ import { useEffect, useRef, useState } from "react";
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import axios from "axios";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 
 const Register = () => {
@@ -80,13 +82,19 @@ const Register = () => {
             if(user){
                 updateUserProfile(name)
                 .then(() => {
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "Your Account has been Created!",
-                        icon: "success",
-                        footer: 'Click here to <a href="/login">Login</a>'
-                      });
-                      console.log(user);
+                    axios.post("http://localhost:5000/users",{name,email})
+                    .then(res =>{
+                        if(res.data.insertedId){
+                            Swal.fire({
+                                title: "Good job!",
+                                text: "Your Account has been Created!",
+                                icon: "success",
+                                footer: 'Click here to <a href="/login">Login</a>'
+                              });
+                        }
+                    })
+                    
+                      
                       
                   }).catch((error) => {
                     // An error occurred
@@ -186,11 +194,7 @@ const Register = () => {
                             </form>
                             <div className="text-center mt-3 space-y-3">
                                 <small>Or Sign In With</small>
-                                <div className="space-x-4">
-                                    <button className="text-[#3B5998] bg-[#F5F5F8] p-3 rounded-full hover:bg-slate-200"><FaFacebookF /></button>
-                                    <button className="text-[#3C79E6] bg-[#F5F5F8] p-3 rounded-full hover:bg-slate-200"><FaLinkedinIn /></button>
-                                    <button className="bg-[#F5F5F8] p-3 rounded-full hover:bg-slate-200"><FcGoogle /></button>
-                                </div>
+                                <SocialLogin/>
                                 <small>Already have an account?<Link to={`/login`} className="btn btn-link text-[#D1A054]">Sign In</Link></small>
                             </div>
                         </div>
