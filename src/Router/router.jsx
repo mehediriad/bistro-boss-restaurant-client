@@ -32,10 +32,34 @@ import PrivateRoute from "./PrivateRoute";
           path: "/shop",
           element: <Shop/>,
         },
+        
+      ]
+    },
+    {
+      path: "dashboard",
+      element: <PrivateRoute><Dashboard/></PrivateRoute>,
+      children:[
         {
-          path: "/dashboard",
-          element: <PrivateRoute><Dashboard/></PrivateRoute>,
+          path: 'cart',
+          element:<div>my cart</div>
         },
+        {
+          path: 'reservation',
+          element:<div>my reservation</div>
+        },
+        {
+          path: 'payment-history',
+          element:<div>my payment-history</div>
+        },
+        {
+          path: 'add-review',
+          element:<div>add-review</div>
+        },
+        {
+          path: 'booking',
+          element:<div>booking</div>
+        },
+        
       ]
     },
     {
