@@ -2,13 +2,14 @@ import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
 const SocialLogin = () => {
     const {googleSignIn} = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const handleGoogleSignIn = (e) =>{
         e.preventDefault()
@@ -26,8 +27,9 @@ const SocialLogin = () => {
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        navigate(location?.state ? location.state : "/")
+                       
                     }
+                    navigate(location?.state ? location.state : "/")
                 })
 
                 
