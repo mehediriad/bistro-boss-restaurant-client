@@ -1,3 +1,5 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { FaHome, FaCalendarAlt, FaShoppingCart, FaShoppingBag, FaUtensils, FaList, FaUsers } from "react-icons/fa";
 import { FaMessage } from "react-icons/fa6";
@@ -5,9 +7,24 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { MdHome, MdOutlinePayment, MdRateReview } from "react-icons/md";
 import { RiCalendarScheduleFill } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import useAuth from "../../hooks/useAuth";
 
 
 const Dashboard = () => {
+   const [admin,setAdmin] = useState(false)
+    const secureAxios = useSecureAxios()
+    const {user} = useAuth()
+
+    useEffect(()=>{
+        secureAxios.get(`/users/admin?email=${user.email}`)
+        .then(res =>{
+            const isAdmin = res.data.admin
+           setAdmin(isAdmin)
+            
+        })
+    },[])
+
     return (
         <div>
             <Helmet>
@@ -44,7 +61,7 @@ const Dashboard = () => {
                                             <h3 className="tracking-widest text-sm">Restaurant</h3>
                                         </span>
                                     </Link>
-                                    <ul className="mb-4">
+                                    {admin ? <ul className="mb-4">
                                         {/* Sidebar content here */}
                                         <li><NavLink to={`/dashboard/admin-home`} className="uppercase"><FaHome /> Admin Home</NavLink></li>
                                         <li><NavLink to={`/dashboard/add-items`} className="uppercase"> <FaUtensils /> Add Items</NavLink></li>
@@ -52,7 +69,7 @@ const Dashboard = () => {
                                         <li><NavLink to={`/dashboard/manage-booking`} className="uppercase"><FaCalendarAlt /> Manage Booking</NavLink></li>
                                         <li><NavLink to={`/dashboard/users`} className="uppercase"><FaUsers /> All Users</NavLink></li>
                                         
-                                    </ul>
+                                    </ul>:
                                     <ul className="mb-4">
                                         {/* Sidebar content here */}
                                         <li><NavLink to={`/dashboard/user-home`} className="uppercase"><FaHome /> User Home</NavLink></li>
@@ -62,7 +79,7 @@ const Dashboard = () => {
                                         <li><NavLink to={`/dashboard/add-review`} className="uppercase"> <MdRateReview /> Add Review</NavLink></li>
                                         <li><NavLink to={`/dashboard/booking`} className="uppercase"><RiCalendarScheduleFill /> My Booking</NavLink></li>
 
-                                    </ul>
+                                    </ul>}
                                     <ul className="border-t-2 pt-4">
                                         {/* Sidebar content here */}
                                         <li><NavLink to={`/`} className="uppercase"><MdHome /> Home</NavLink></li>

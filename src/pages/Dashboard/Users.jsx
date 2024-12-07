@@ -2,18 +2,21 @@
 import { useQuery } from "@tanstack/react-query";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
 import { FaTrashAlt, FaUsers } from "react-icons/fa";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useSecureAxios from "../../hooks/useSecureAxios";
+import useAuth from "../../hooks/useAuth";
 
 
 
 const Users = () => {
+    const secureAxios = useSecureAxios()
+    const {user} = useAuth()
 
     const { data: users = [] ,refetch } = useQuery({
         queryKey: ["users"],
         queryFn: async () => {
             
-            const resData = await axios.get(`http://localhost:5000/users`)
+            const resData = await secureAxios.get(`/users?email=${user.email}`)
             return resData.data;
         }
     })
@@ -31,7 +34,7 @@ const Users = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/users/${id}`)
+                secureAxios.delete(`/users/${id}`)
                     .then(res => {
                        
                         
@@ -51,6 +54,7 @@ const Users = () => {
     }
 
     const handleMakeAdmin = (id,name) =>{
+        console.log(id);
         
         Swal.fire({
             title: "Are you sure?",
@@ -62,14 +66,14 @@ const Users = () => {
             confirmButtonText: "Yes, Make Admin!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000//users/make-admin/${id}`)
+                secureAxios.patch(`/users/make-admin/${id}`)
                     .then(res => {
                        
                         
-                        if (res.data.deletedCount > 0) {
+                        if (res.data.modifiedCount > 0) {
                             Swal.fire({
                                 title: "Updated!",
-                                text: `Now, ${name} Made as an Admin.`,
+                                text: `Now, ${name} is an an Admin.`,
                                 icon: "success"
                             });
                             refetch()
@@ -121,9 +125,9 @@ const Users = () => {
 
                                         </td>
                                         <td>
-                                            <button onClick={() =>handleMakeAdmin (user._id,user.name)} className="btn btn-md text-2xl text-white bg-[#D1A054]">
+                                            {user.role === "admin" ? "Admin" :<button onClick={() =>handleMakeAdmin (user._id,user.name)} className="btn btn-md text-2xl text-white bg-[#D1A054]">
                                                 <FaUsers />
-                                            </button>
+                                            </button>}
                                         </td>
                                         <th>
                                             <button onClick={() => handleDeleteUser (user._id)} className="btn btn-md text-white bg-red-600">
