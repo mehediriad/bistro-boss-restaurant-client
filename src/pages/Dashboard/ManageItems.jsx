@@ -1,17 +1,17 @@
-import { FaTrashAlt } from "react-icons/fa";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import SectionHeader from "../../components/SectionHeader/SectionHeader";
-import useCart from "../../hooks/useCart";
-import axios from "axios";
+import useMenuData from "../../hooks/useMenuData";
 import Swal from "sweetalert2";
+import useSecureAxios from "../../hooks/useSecureAxios";
 import { Link } from "react-router-dom";
 
 
-const MyCart = () => {
-    const [cart,refetch] = useCart()
-    const totalPrice = cart.reduce((total, current) => total + current.price, 0)
+const ManageItems = () => {
+    const [menu, , refetch] = useMenuData()
+    const secureAxios = useSecureAxios()
 
-    const handleDelete = (id) => {
 
+    const handleDeleteItems = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -22,10 +22,10 @@ const MyCart = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/carts/${id}`)
+                secureAxios.delete(`/menu/${id}`)
                     .then(res => {
-                       
-                        
+
+
                         if (res.data.deletedCount > 0) {
                             Swal.fire({
                                 title: "Deleted!",
@@ -39,23 +39,15 @@ const MyCart = () => {
 
             }
         });
-
     }
-
+    const handleUpdateItems = () => { }
     return (
         <div>
-            <SectionHeader title={`WANNA ADD MORE?`} subtitle={`My Cart`} styleName={`text-3xl`}></SectionHeader>
+            <SectionHeader title={`Manage All Items`} subtitle={`Hurry up`} styleName={`text-3xl`}></SectionHeader>
             <div className="bg-white w-5/6 mx-auto p-10 rounded-lg">
                 <div className="flex justify-between items-center">
-                    <h2 className="text-2xl font-bold font-cinzel">Total Orders: {cart.length}</h2>
-                    <h2 className="text-2xl font-bold font-cinzel">Total Price: ${totalPrice}</h2>
-                    {
-                        cart.length ?
-                        <Link to={`/dashboard/payment`}>
-                            <button className="btn bg-[#D1A054] text-white text-lg">Pay</button>
-                        </Link>:
-                        <button disabled className="btn bg-[#D1A054] text-white text-lg">Pay</button>
-                    }
+                    <h2 className="text-2xl font-bold font-cinzel">Total Items: {menu.length}</h2>
+
                 </div>
                 <div>
                     <div className="overflow-x-auto mt-6 rounded-t-lg">
@@ -64,19 +56,20 @@ const MyCart = () => {
                             <thead className="text-white bg-[#D1A054] uppercase font-cinzel ">
                                 <tr>
                                     <th>#</th>
-                                    <th>Item Image</th>
-                                    <th>Item Name</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
                                     <th>Price</th>
-                                    <th>Action</th>
+                                    <th>Update</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    cart.map((item, idx) => <tr key={item._id}>
+                                    menu.map((item, idx) => <tr key={item._id}>
                                         <th>
                                             {idx + 1}
-                                            {console.log(item)
-                                            }
+
                                         </th>
                                         <td>
                                             <div className="flex items-center gap-3">
@@ -94,11 +87,27 @@ const MyCart = () => {
                                             {item.name}
 
                                         </td>
-                                        <td>{item.price}</td>
+                                        <td>
+                                            {item.category}
+
+                                        </td>
+                                        <td>
+                                            ${item.price}
+
+                                        </td>
+                                        <td>
+                                            <Link to={`/dashboard/manage-items/update-item/${item._id}`}>
+                                                <button onClick={() => handleUpdateItems(item)} className="btn btn-md text-2xl text-white bg-[#D1A054]">
+                                                    <FaEdit />
+                                                </button>
+                                            </Link>
+
+                                        </td>
                                         <th>
-                                            <button onClick={() => handleDelete(item._id)} className="btn btn-md text-white bg-red-600">
+                                            <button onClick={() => handleDeleteItems(item._id)} className="btn btn-md text-white bg-red-600">
                                                 <FaTrashAlt />
                                             </button>
+
                                         </th>
                                     </tr>)
                                 }
@@ -114,4 +123,4 @@ const MyCart = () => {
     );
 };
 
-export default MyCart;
+export default ManageItems;

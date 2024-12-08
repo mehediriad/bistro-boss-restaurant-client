@@ -6,22 +6,17 @@ import useAdmin from "../hooks/useAdmin";
 
 
 const AdminRoute = ({children}) => {
-
-    
-    
     const {loading,user} = useAuth()
     const location = useLocation()
 
     const [admin,adminPanding] = useAdmin()
     console.log("admin",admin,adminPanding);
     
-
-
-    
-    
-
     if(loading || adminPanding){
-        return <span className="loading loading-dots loading-lg"></span>
+        return <div  className="flex justify-center items-center min-h-screen">
+            <span className="loading loading-dots loading-lg"></span>
+        </div>
+        
     }
 
     if(!user || !admin){
