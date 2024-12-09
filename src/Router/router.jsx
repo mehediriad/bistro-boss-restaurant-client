@@ -17,6 +17,7 @@ import AdminRoute from "./AdminRoute";
 import ManageItems from "../pages/Dashboard/ManageItems";
 import UpdateItem from "../pages/Dashboard/UpdateItem";
 import Payment from "../pages/Dashboard/Payment";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory";
 
   const router = createBrowserRouter([
     {
@@ -77,7 +78,7 @@ import Payment from "../pages/Dashboard/Payment";
         },
         {
           path: 'payment-history',
-          element:<div>my payment-history</div>
+          element:<PaymentHistory/>
         },
         {
           path: 'add-review',

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const MyCart = () => {
     const [cart,refetch] = useCart()
-    const totalPrice = cart.reduce((total, current) => total + current.price, 0)
+    const totalPrice = cart.reduce((total, current) => total + parseInt(current.price), 0)
 
     const handleDelete = (id) => {
 
