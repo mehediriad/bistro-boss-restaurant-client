@@ -7,7 +7,9 @@ const Contact = () => {
             <Helmet>
                 <title>Bistro | Contact</title>
             </Helmet>
-            Contact
+            <div className="min-h-screen flex justify-center items-center">
+            <h2 className="text-2xl font-bold">Contact under development</h2>
+            </div>
         </div>
     );
 };
