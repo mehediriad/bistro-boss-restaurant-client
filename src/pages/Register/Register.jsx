@@ -82,7 +82,7 @@ const Register = () => {
             if(user){
                 updateUserProfile(name)
                 .then(() => {
-                    axios.post("http://localhost:5000/users",{name,email})
+                    axios.post("https://bistro-boss-restaurant-server-hazel.vercel.app/users",{name,email})
                     .then(res =>{
                         if(res.data.insertedId){
                             Swal.fire({

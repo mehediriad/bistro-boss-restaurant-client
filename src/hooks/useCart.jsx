@@ -8,7 +8,7 @@ const useCart = () => {
     const {data:cart=[],refetch} = useQuery({
         queryKey:["cart", user?.email],
         queryFn: async () =>{
-            const resData = await axios.get(`http://localhost:5000/carts?email=${user.email}`)
+            const resData = await axios.get(`https://bistro-boss-restaurant-server-hazel.vercel.app/carts?email=${user.email}`)
             return resData.data;
         }
     })

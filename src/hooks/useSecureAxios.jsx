@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 
 const secureAxios = axios.create({
-    baseURL:"http://localhost:5000"
+    baseURL:"https://bistro-boss-restaurant-server-hazel.vercel.app"
 })
 
 const useSecureAxios = () => {

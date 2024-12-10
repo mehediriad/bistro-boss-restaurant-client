@@ -10,7 +10,7 @@ const AdminRoute = ({children}) => {
     const location = useLocation()
 
     const [admin,adminPanding] = useAdmin()
-    console.log("admin",admin,adminPanding);
+    // console.log("admin",admin,adminPanding);
     
     if(loading || adminPanding){
         return <div  className="flex justify-center items-center min-h-screen">

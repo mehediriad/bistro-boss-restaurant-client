@@ -18,11 +18,15 @@ import ManageItems from "../pages/Dashboard/ManageItems";
 import UpdateItem from "../pages/Dashboard/UpdateItem";
 import Payment from "../pages/Dashboard/Payment";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory";
+import UserHome from "../pages/Dashboard/UserHome";
+import AdminHome from "../pages/Dashboard/AdminHome";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Root/>,
+      errorElement:<ErrorPage/>,
       children:[
         {
           path: "/",
@@ -46,7 +50,12 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory";
     {
       path: "dashboard",
       element: <PrivateRoute><Dashboard/></PrivateRoute>,
+      errorElement:<ErrorPage></ErrorPage>,
       children:[
+        {
+          path: 'admin-home',
+          element:<AdminRoute><AdminHome/></AdminRoute>
+        },
         {
           path: 'users',
           element:<AdminRoute><Users/></AdminRoute>
@@ -60,13 +69,17 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory";
           element:<AdminRoute><ManageItems/></AdminRoute>
         },
         {
+          path: 'manage-booking',
+          element:<AdminRoute><div><h2 className="text-2xl font-bold">Manage Booking under development</h2></div></AdminRoute>
+        },
+        {
           path: 'manage-items/update-item/:id',
           element:<AdminRoute><UpdateItem/></AdminRoute>,
-          loader: ({params})=> fetch(`http://localhost:5000/menu/${params.id}`)
+          loader: ({params})=> fetch(`https://bistro-boss-restaurant-server-hazel.vercel.app/menu/${params.id}`)
         },
         {
           path: 'user-home',
-          element:<div>user home</div>
+          element:<UserHome/>
         },
         {
           path: 'cart',
@@ -74,7 +87,7 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory";
         },
         {
           path: 'reservation',
-          element:<div>my reservation</div>
+          element:<div><h2 className="text-2xl font-bold">My reservation under development</h2></div>
         },
         {
           path: 'payment-history',
@@ -82,11 +95,11 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory";
         },
         {
           path: 'add-review',
-          element:<div>add-review</div>
+          element:<div><h2 className="text-2xl font-bold">Add Review under development</h2></div>
         },
         {
           path: 'booking',
-          element:<div>booking</div>
+          element:<div><h2 className="text-2xl font-bold">My Booking under development</h2></div>
         },
         {
           path: 'payment',
@@ -97,11 +110,13 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory";
     },
     {
       path:'/login',
-      element:<Login/>
+      element:<Login/>,
+      errorElement:<ErrorPage></ErrorPage>
     },
     {
       path:'/register',
-      element:<Register/>
+      element:<Register/>,
+      errorElement:<ErrorPage></ErrorPage>
     },
 
   ]);

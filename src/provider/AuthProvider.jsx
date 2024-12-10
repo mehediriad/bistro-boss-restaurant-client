@@ -42,10 +42,11 @@ const AuthProvider = ({children}) => {
               setUser(currentUser)
               const userInfo = {email: currentUser.email}
               if(currentUser){
-                axios.post("http://localhost:5000/jwt",userInfo)
+                axios.post("https://bistro-boss-restaurant-server-hazel.vercel.app/jwt",userInfo)
                 .then(res =>{
                    if(res.data?.token){
                     localStorage.setItem("access-token",`Bearer ${res.data.token}`)
+                   
                    }
                 })
               }

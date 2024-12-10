@@ -17,7 +17,7 @@ const SocialLogin = () => {
         .then((result) => {
             const user = result.user
             if(user){
-                axios.post("http://localhost:5000/users",{name:user.displayName,email:user.email})
+                axios.post("https://bistro-boss-restaurant-server-hazel.vercel.app/users",{name:user.displayName,email:user.email})
                 .then(res =>{
                     if(res.data.insertedId){
                         Swal.fire({

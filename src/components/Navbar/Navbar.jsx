@@ -2,19 +2,25 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png"
 import useAuth from "../../hooks/useAuth";
 import useCart from "../../hooks/useCart";
+import Swal from "sweetalert2";
+import useAdmin from "../../hooks/useAdmin";
 
 
 const Navbar = () => {
     const { user, logOut } = useAuth()
     const [cart] = useCart()
-    console.log(user);
-    
+    const [admin] = useAdmin()
+    const totalPrice = cart.reduce((total, current) => total + parseInt(current.price), 0)
+
     const links = <>
         <li><NavLink to={`/`}>Home</NavLink></li>
         <li><NavLink to={`/contact`}>Contact</NavLink></li>
         <li><NavLink to={`/menu`}>Menu</NavLink></li>
         <li><NavLink to={`/shop`}>Shop</NavLink></li>
-        {user && <li><NavLink to={`/dashboard`}>Dashboard</NavLink></li>}
+        {user && admin ? <li><NavLink to={`/dashboard/admin-home`}>Dashboard</NavLink></li> : ""}
+        {user && !admin ?<li><NavLink to={`/dashboard/user-home`}>Dashboard</NavLink></li>  : ""}
+
+        {/* {user && <li><NavLink to={`/dashboard/user-home`}>Dashboard</NavLink></li>} */}
 
 
     </>
@@ -73,7 +79,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="navbar-end">
-                        {user ?<div className="flex-none">
+                        {user ? <div className="flex-none">
                             <div className="dropdown dropdown-end">
                                 <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                                     <div className="indicator">
@@ -97,14 +103,17 @@ const Navbar = () => {
                                     className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
                                     <div className="card-body">
                                         <span className="text-lg font-bold text-white">{cart.length} Items</span>
-                                        <span className="text-info">Subtotal: $112</span>
+                                        <span className="text-info">Total: ${totalPrice}</span>
                                         <div className="card-actions">
-                                            <button className="btn btn-primary btn-block">View cart</button>
+                                            <Link to={`dashboard/cart`}>
+                                                <button className="btn btn-primary btn-block">View cart</button>
+                                            </Link>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>:""}
+                        </div> : ""}
 
                         <button className="btn btn-ghost btn-circle">
                             <svg
@@ -121,7 +130,7 @@ const Navbar = () => {
                             </svg>
                         </button>
 
-                        {user? "" : <Link to="/login"><button className="btn btn-outline btn-warning">Login</button></Link>}
+                        {user ? "" : <Link to="/login"><button className="btn btn-outline btn-warning">Login</button></Link>}
 
                         {user ? <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">

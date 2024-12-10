@@ -21,7 +21,7 @@ const TabItem = ({ item }) => {
                 image,
                 price
             }
-            axios.post("http://localhost:5000/carts",cartData)
+            axios.post("https://bistro-boss-restaurant-server-hazel.vercel.app/carts",cartData)
             .then(res =>{
                 if(res.data.insertedId){
                     Swal.fire({
